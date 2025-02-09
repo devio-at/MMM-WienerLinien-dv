@@ -185,9 +185,11 @@ module.exports = NodeHelper.create({
         const stations = {};
 
         for (const entry of data) {
+            const stationRbl = _.get(entry, 'locationStop.properties.attributes.rbl');
+
             const stationName = _.get(entry, 'locationStop.properties.name');
             if (!_.has(stations, stationName)) {
-                stations[stationName] = { name: _.get(entry, 'locationStop.properties.title'), departures: [] };
+                stations[stationRbl] = { name: _.get(entry, 'locationStop.properties.title'), rbl: stationRbl, departures: [] };
             }
 
             for (const { departures, name, towards, type } of entry.lines) {
@@ -201,7 +203,7 @@ module.exports = NodeHelper.create({
 
                     const departureTimeProp = _.has(departure.departureTime, 'timeReal') ? 'timeReal' : 'timePlanned';
 
-                    stations[stationName].departures.push({ time: departure.departureTime[departureTimeProp], towards, line: name, type });
+                    stations[stationRbl].departures.push({ time: departure.departureTime[departureTimeProp], towards, line: name, type });
                 }
 
                 if (metroFlag) {
@@ -216,7 +218,7 @@ module.exports = NodeHelper.create({
                         datetime.setSeconds(0);
                         datetime.setMinutes(datetime.getMinutes() + timeMatch);
 
-                        stations[stationName].departures.push({
+                        stations[stationRbl].departures.push({
                             time: datetime,
                             towards: towardsMatch,
                             line: name,
@@ -227,10 +229,19 @@ module.exports = NodeHelper.create({
             }
         }
 
-        for (const stationName in stations) {
-            stations[stationName].departures = _.sortBy(stations[stationName].departures, 'time');
+        for (const stationRbl in stations) {
+            stations[stationRbl].departures = _.sortBy(stations[stationRbl].departures, 'time');
         }
 
-        this.sendSocketNotification('STATIONS', stations);
+        // sort by config order: this.config.stations
+
+        const result = {};
+        let i = 0;
+        for(const rbl of this.config.stations) {
+            result[i] = stations[rbl];
+            i++;
+        }
+
+        this.sendSocketNotification('STATIONS', result);        // from stations
     }
 });

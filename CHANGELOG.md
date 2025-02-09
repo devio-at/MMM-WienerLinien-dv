@@ -1,3 +1,10 @@
+# MMM-WienerLinien-dv Changelog
+
+## [2.0.2]
+
+- Merge original `feature/compact-view` branch into `master` branch
+- Display stations according to sequence in configuration, instead of alphabetically
+
 # MMM-WienerLinien Changelog
 
 ## [Unreleased]

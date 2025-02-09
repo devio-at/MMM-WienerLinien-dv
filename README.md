@@ -4,6 +4,8 @@
 
 Public Transport of Vienna/Austria Module for MagicMirror²
 
+The original module has been forked to display stations according to their sequence in the configuration file in **Compact View**.
+
 ## Examples
 
 ### Classic View
@@ -38,7 +40,7 @@ Shows incident data (classic view only).
 
 ```js
 {
-    module: 'MMM-WienerLinien',
+    module: 'MMM-WienerLinien-dv',
     position: 'top_right',
     config: {
         stations: ['2545', '1668'],
@@ -47,7 +49,7 @@ Shows incident data (classic view only).
 }
 ```
 
--   Run command `npm i --production` in `~/MagicMirror/modules/MMM-WienerLinien` directory.
+-   Run command `npm i --production` in `~/MagicMirror/modules/MMM-WienerLinien-dv` directory.
 
 ## Config Options
 

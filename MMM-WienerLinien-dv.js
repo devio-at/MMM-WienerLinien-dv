@@ -2,9 +2,11 @@
  * @file MMM-WienerLinien.js
  *
  * @author fewieden
+ * @author romgable
  * @license MIT
  *
  * @see  https://github.com/fewieden/MMM-WienerLinien
+ * @see  https://github.com/romgable/MMM-WienerLinien
  */
 
 /* global Module Log moment config */
@@ -32,7 +34,7 @@
  * @requires external:Log
  * @requires external:moment
  */
-Module.register('MMM-WienerLinien', {
+Module.register('MMM-WienerLinien-dv', {
     /** @member {number} index - Is used to determine which station gets rendered. */
     index: 0,
 
